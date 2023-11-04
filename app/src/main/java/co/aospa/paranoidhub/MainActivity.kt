@@ -341,7 +341,7 @@ fun MainView() {
                         ) {
                             LazyColumn {
                                 item {
-                                    DeviceChangelog(uiState.update?.changelogDevice)
+                                    DeviceChangelog(uiState.update?.changelog_device)
                                 }
                                 item {
                                     PlatformChangelog(uiState.update!!)

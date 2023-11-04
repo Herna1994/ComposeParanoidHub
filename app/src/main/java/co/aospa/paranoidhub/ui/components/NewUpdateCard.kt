@@ -32,12 +32,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import co.aospa.paranoidhub.R
-import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Updates
+import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Update
 import co.aospa.paranoidhub.utils.FileUtils
 import co.aospa.paranoidhub.utils.UpdateUtils
 
 @Composable
-fun NewUpdateCard(update: Updates) {
+fun NewUpdateCard(update: Update) {
 
     val downloadSize : String = FileUtils.humanSize(update.size!!.toLong())
 
@@ -45,10 +45,10 @@ fun NewUpdateCard(update: Updates) {
         mutableStateOf(false)
     }
 
-    val text = if (UpdateUtils.isStable(update.buildType)) {
-        stringResource(R.string.available_to_download_stable, update.version, update.versionCode)
+    val text = if (UpdateUtils.isStable(update.build_type)) {
+        stringResource(R.string.available_to_download_stable, update.version, update.version_code)
     } else {
-        stringResource(R.string.available_to_download, update.version, update.buildType)
+        stringResource(R.string.available_to_download, update.version, update.build_type)
     }
 
     DeltaExplanationDialog(showDeltaDialog = showDeltaDialog, onDismiss = { showDeltaDialog = false })

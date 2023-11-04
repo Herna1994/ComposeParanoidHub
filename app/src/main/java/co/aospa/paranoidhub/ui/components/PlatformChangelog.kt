@@ -27,22 +27,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import co.aospa.paranoidhub.R
-import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Updates
+import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Update
 import co.aospa.paranoidhub.utils.UpdateUtils
 import kotlinx.coroutines.delay
 
 @Composable
-fun PlatformChangelog(update: Updates) {
+fun PlatformChangelog(update: Update) {
 
     val context = LocalContext.current
     val url = "https://paranoidandroid.co/changelog"
 
     val expanded = remember { mutableStateOf(false) }
 
-    val title = if (UpdateUtils.isStable(update.buildType)) {
-        stringResource(R.string.platform_changelog, update.version, update.versionCode)
+    val title = if (UpdateUtils.isStable(update.build_type)) {
+        stringResource(R.string.platform_changelog, update.version, update.version_code)
     } else {
-        stringResource(R.string.platform_changelog, update.version, update.buildType)
+        stringResource(R.string.platform_changelog, update.version, update.build_type)
     }
 
     val hiddenText =

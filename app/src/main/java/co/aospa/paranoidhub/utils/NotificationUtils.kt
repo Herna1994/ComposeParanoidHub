@@ -12,30 +12,30 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import co.aospa.paranoidhub.R
-import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Updates
+import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Update
 import co.aospa.paranoidhub.data.api.model.State
 
 object NotificationUtils {
 
     private val notificationManager: NotificationManager? = null
 
-    fun showNotification(context: Context, update: Updates, state: State = State.NONE, installationProgress: Int = 0) {
-        val isStable = UpdateUtils.isStable(update.buildType)
+    fun showNotification(context: Context, update: Update, state: State = State.NONE, installationProgress: Int = 0) {
+        val isStable = UpdateUtils.isStable(update.build_type)
 
-        val notification = NotificationCompat.Builder(context, "ParanoidHub Update")
+        val notification = NotificationCompat.Builder(context, "ParanoidHub Updates")
             .setSmallIcon(R.drawable.logo_dark)
             .setContentTitle(
                 if (state == State.DOWNLOADING) {
                     if (isStable) {
-                        context.getString(R.string.downloading_update_notification_title, update.version, update.versionCode)
+                        context.getString(R.string.downloading_update_notification_title, update.version, update.version_code)
                     } else {
-                        context.getString(R.string.downloading_update_notification_title, update.version, update.buildType)
+                        context.getString(R.string.downloading_update_notification_title, update.version, update.build_type)
                     }
                 } else {
                     if (isStable) {
-                        context.getString(R.string.available_to_download_stable, update.version, update.versionCode)
+                        context.getString(R.string.available_to_download_stable, update.version, update.version_code)
                     } else {
-                        context.getString(R.string.available_to_download, update.version, update.buildType)
+                        context.getString(R.string.available_to_download, update.version, update.build_type)
                     }
                 }
             )
@@ -79,8 +79,8 @@ object NotificationUtils {
         val notificationManager = NotificationManagerCompat.from(context)
         val notificationId = 1
         val channel = NotificationChannel(
-            "ParanoidHub Update",
-            "Update Notifications",
+            "ParanoidHub Updates",
+            "Updates Notifications",
             NotificationManager.IMPORTANCE_DEFAULT
         )
         notificationManager.createNotificationChannel(channel)

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization") version "1.6.10"
 }
 
 android {
@@ -55,7 +56,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
 }
 
 dependencies {
@@ -72,21 +72,13 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended-android:1.5.4")
     implementation("androidx.navigation:navigation-compose:2.7.4")
     implementation("androidx.appcompat:appcompat:1.6.1")
-
-
-    // RetroFit Dependencies
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
-
-    // Gson Dependencies
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
     implementation("androidx.work:work-runtime-ktx:2.8.1")
     implementation("androidx.hilt:hilt-common:1.1.0")
-    implementation("com.google.firebase:firebase-ml-modeldownloader-ktx:24.2.1")
+
+    // Ktor Dependencies
+    implementation("io.ktor:ktor-client-okhttp:2.3.5")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

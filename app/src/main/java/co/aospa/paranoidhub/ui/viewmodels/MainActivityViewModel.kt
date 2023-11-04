@@ -15,7 +15,7 @@ import androidx.lifecycle.viewModelScope
 import co.aospa.paranoidhub.GlobalConstants
 import co.aospa.paranoidhub.R
 import co.aospa.paranoidhub.data.api.methods.ParanoidHubApi
-import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Updates
+import co.aospa.paranoidhub.data.api.methods.getdeviceinformation.Update
 import co.aospa.paranoidhub.data.api.model.DeviceInformation
 import co.aospa.paranoidhub.data.api.model.Flavor
 import co.aospa.paranoidhub.data.api.model.State
@@ -129,16 +129,16 @@ class MainActivityViewModel : ViewModel() {
             val formatter = DateTimeFormatter.ofPattern("d' 'MMMM' 'yyyy HH:mm")
             val formattedDate = LocalDateTime.now().format(formatter)
             try {
-                val result = ParanoidHubApi.getApi()?.getDeviceInformation(deviceInformation.codename!!)
+                val result = ParanoidHubApi.getApi().getDeviceInformation(deviceInformation.codename!!)
 
-                if (result?.isSuccessful == true) {
-                    val matchingUpdates = result.body()?.updates?.filter { update ->
+                if (result.updates.isNotEmpty()) {
+                    val matchingUpdates = result.updates.filter { update ->
 
                         if (isBetaEnabled) {
-                            val isBetaUpdate = update.buildType == Flavor.Beta.toString()
+                            val isBetaUpdate = update.build_type == Flavor.Beta.toString()
 
                             // Check if the update's Android version is the same or higher
-                            val isCompatibleAndroidVersion = update.androidVersion >= deviceInformation.androidVersion!!
+                            val isCompatibleAndroidVersion = update.android_version >= deviceInformation.androidVersion!!
 
                             // Check if the update's datetime is newer than the buildDate
                             val isNewerUpdate = update.datetime > deviceInformation.buildDate!!
@@ -146,15 +146,15 @@ class MainActivityViewModel : ViewModel() {
                             isBetaUpdate && isCompatibleAndroidVersion && isNewerUpdate
                         } else {
                             // If not a beta update, filter by Android version and versionCode
-                            update.androidVersion == deviceInformation.androidVersion!! && update.versionCode > deviceInformation.paranoidAndroidNumber!!
+                            update.android_version == deviceInformation.androidVersion!! && update.version_code > deviceInformation.paranoidAndroidNumber!!
                         }
                     }
 
-                    if (!matchingUpdates.isNullOrEmpty()) {
-                        val sortedMatchingUpdates = matchingUpdates.sortedBy { it.versionCode }
+                    if (matchingUpdates.isNotEmpty()) {
+                        val sortedMatchingUpdates = matchingUpdates.sortedBy { it.version_code }
                         val beforeLastIndex = sortedMatchingUpdates.size - 2
 
-                        if (beforeLastIndex >= 0 && deviceInformation.paranoidAndroidNumber!! == sortedMatchingUpdates[beforeLastIndex].versionCode) {
+                        if (beforeLastIndex >= 0 && deviceInformation.paranoidAndroidNumber!! == sortedMatchingUpdates[beforeLastIndex].version_code) {
                             // VersionCode is the before last in matchingUpdates
                             val nextMatchingUpdate = sortedMatchingUpdates[beforeLastIndex + 1]
 
@@ -170,16 +170,16 @@ class MainActivityViewModel : ViewModel() {
 
                             if (nextMatchingUpdate.delta?.isNotBlank() == true) {
                                 downloadPackage = nextMatchingUpdate.delta.toString()
-                                packageSHA256 = nextMatchingUpdate.fastbootSha256.toString()
+                                packageSHA256 = nextMatchingUpdate.delta_sha256.toString()
                             } else {
                                 downloadPackage = nextMatchingUpdate.url.toString()
-                                packageSHA256 = nextMatchingUpdate.recoverySha256.toString()
+                                packageSHA256 = nextMatchingUpdate.recovery_sha256.toString()
                             }
                         } else {
                             // VersionCode is not the before last in matchingUpdates
                             val latestMatchingUpdate = sortedMatchingUpdates.last()
                             downloadPackage = latestMatchingUpdate.url.toString()
-                            packageSHA256 = latestMatchingUpdate.recoverySha256.toString()
+                            packageSHA256 = latestMatchingUpdate.recovery_sha256.toString()
                         }
 
                         // Lets give it some animation
@@ -387,7 +387,7 @@ class MainActivityViewModel : ViewModel() {
         val statusText: String = "",
         val installationProgress: Float = 0.0F,
         val deviceInformation: DeviceInformation? = null,
-        val update: Updates? = null,
+        val update: Update? = null,
         val lastCheckedDate: String? = null,
         val isBetaEnabled : Boolean = false
     )
