@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name" translatable="false">ParanoidHub</string>
+    <string name="banner_title" translatable="false">Paranoid Android</string>
+    <string name="banner_subtitle">by the Paranoid Android team</string>
+    <string name="device_version">Version</string>
+    <string name="device_android_version">Android version</string>
+    <string name="device_security_patchset">Security version</string>
+    <string name="device_changelog">Device changelog</string>
+    <string name="platform_changelog">%s %s changelog</string>
+    <string name="local_update">Local update</string>
+    <string name="settings">Settings</string>
+    <string name="enable_beta_description">Enabling this will prioritize betas when searching for updates</string>
+    <string name="install_update_button">Install Update</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="find_update_button">Find Update</string>
+    <string name="downloading_file">Downloading file</string>
+    <string name="downloaded_file">Downloaded</string>
+    <string name="available_to_download">New %s %s is available</string>
+    <string name="available_to_download_stable">%s %s is available</string>
+    <string name="downloading_update_notification_title">Downloading %s %s</string>
+    <string name="downloading_update_notification_summary">A new update is available for your device.</string>
+    <string name="connecting">Connecting…</string>
+    <string name="searching_for_update">Searching for an update, be patient</string>
+    <string name="last_checked">Last checked:</string>
+    <string name="system_up_to_date">System is up to date</string>
+    <string name="install_action">Install</string>
+    <string name="cancel_action">Cancel</string>
+    <string name="local_update_title">Before you try flashing local updates, you might want to check that you have downloaded the correct zip</string>
+    <string name="local_update_summary">Proceed at your own risk when flashing the zip</string>
+    <string name="install_local_update">Install local update</string>
+</resources>
