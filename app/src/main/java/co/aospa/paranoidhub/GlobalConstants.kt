@@ -2,8 +2,8 @@ package co.aospa.paranoidhub
 
 object GlobalConstants {
 
-    //const val API_URL = "https://api.paranoidandroid.co/"
-    const val API_URL = "https://raw.githubusercontent.com/Herna1994/ota/master/"
+    //const val API_URL = "api.paranoidandroid.co/"
+    const val API_URL = "raw.githubusercontent.com/Herna1994/ota/master"
 
     const val AB_PAYLOAD_BIN_PATH = "payload.bin"
     const val AB_PAYLOAD_PROPERTIES_PATH = "payload_properties.txt"
