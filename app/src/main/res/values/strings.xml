@@ -10,9 +10,9 @@
     <string name="local_update">Local update</string>
     <string name="settings">Settings</string>
     <string name="enable_beta_description">Enabling this will prioritize betas when searching for updates</string>
-    <string name="install_update_button">Install Updates</string>
+    <string name="install_update_button">Install Update</string>
     <string name="cancel_button">Cancel</string>
-    <string name="find_update_button">Find Updates</string>
+    <string name="find_update_button">Find Update</string>
     <string name="downloading_file">Downloading file</string>
     <string name="downloaded_file">Downloaded</string>
     <string name="available_to_download">New %s %s is available</string>

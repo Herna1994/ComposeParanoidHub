@@ -79,8 +79,8 @@ object NotificationUtils {
         val notificationManager = NotificationManagerCompat.from(context)
         val notificationId = 1
         val channel = NotificationChannel(
-            "ParanoidHub Updates",
-            "Updates Notifications",
+            "ParanoidHub Update",
+            "Update Notifications",
             NotificationManager.IMPORTANCE_DEFAULT
         )
         notificationManager.createNotificationChannel(channel)
