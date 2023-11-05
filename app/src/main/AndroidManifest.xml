@@ -23,16 +23,25 @@
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:enableOnBackInvokedCallback="true"
+        android:hardwareAccelerated="true"
         >
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ParanoidHub"
             android:screenOrientation="portrait">
+            <intent-filter android:priority="1">
+                <action android:name="android.settings.SYSTEM_UPDATE_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="com.android.settings.SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <intent-filter>
                 <action android:name="DOWNLOAD"/>
                 <action android:name="CANCEL_DOWNLOAD"/>
@@ -43,8 +52,11 @@
             android:name=".utils.Scheduler"
             android:exported="false" />
 
+        <service android:name=".utils.UpdateService"
+            android:exported="false"/>
+
         <receiver
-            android:name="co.aospa.paranoidhub.utils.AlarmReceiver"
+            android:name="co.aospa.hub.utils.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

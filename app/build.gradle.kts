@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "co.aospa.paranoidhub"
+    namespace = "co.aospa.hub"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "co.aospa.paranoidhub"
+        applicationId = "co.aospa.hub"
         minSdk = 33
         targetSdk = 34
         versionCode = 1
@@ -29,7 +29,7 @@ android {
         release {
             isDebuggable = true
             isMinifyEnabled = true
-            applicationIdSuffix = ".release"
+            //applicationIdSuffix = ".release"
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
