@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 data class GetDeviceInformationResponse(
     val updates: List<Update>
 ) {
-
     @Serializable
     data class Update(
         val date: String,
@@ -29,5 +28,4 @@ data class GetDeviceInformationResponse(
         val android_spl: String,
         val changelog_device: String?
     )
-
 }

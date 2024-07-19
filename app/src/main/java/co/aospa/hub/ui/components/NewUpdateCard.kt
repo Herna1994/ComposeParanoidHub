@@ -29,7 +29,7 @@ import co.aospa.hub.utils.UpdateUtils
 @Composable
 fun NewUpdateCard(update: GetDeviceInformationResponse.Update) {
 
-    val downloadSize : String = FileUtils.humanSize(update.size!!.toLong())
+    val downloadSize: String = FileUtils.humanSize(update.size!!.toLong())
 
     var showDeltaDialog by rememberSaveable {
         mutableStateOf(false)
@@ -41,7 +41,9 @@ fun NewUpdateCard(update: GetDeviceInformationResponse.Update) {
         stringResource(R.string.available_to_download, update.version, update.build_type)
     }
 
-    DeltaExplanationDialog(showDeltaDialog = showDeltaDialog, onDismiss = { showDeltaDialog = false })
+    DeltaExplanationDialog(
+        showDeltaDialog = showDeltaDialog,
+        onDismiss = { showDeltaDialog = false })
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(

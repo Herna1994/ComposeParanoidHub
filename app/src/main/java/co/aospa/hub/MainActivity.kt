@@ -70,16 +70,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import co.aospa.hub.data.api.model.State
-import co.aospa.hub.ui.components.LocalUpdateBottomSheet
 import co.aospa.hub.ui.components.Changelog
+import co.aospa.hub.ui.components.LocalUpdateBottomSheet
 import co.aospa.hub.ui.components.NewUpdateCard
 import co.aospa.hub.ui.components.ParanoidAndroidVersion
 import co.aospa.hub.ui.components.ProgressBar
 import co.aospa.hub.ui.components.SettingsDialog
 import co.aospa.hub.ui.components.StateButtons
 import co.aospa.hub.ui.theme.ParanoidHubTheme
-import co.aospa.hub.utils.VibrateUtils
 import co.aospa.hub.utils.Scheduler
+import co.aospa.hub.utils.VibrateUtils
 
 private lateinit var viewModel: MainActivityViewModel
 private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
@@ -163,14 +163,15 @@ class MainActivity : ComponentActivity() {
 
         registerReceiver(broadcastReceiver, intentFilter, RECEIVER_EXPORTED)
 
-        filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val selectedUri = result.data?.data
+        filePickerLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    val selectedUri = result.data?.data
 
-                viewModel.installLocalUpdate(selectedUri!!, this)
+                    viewModel.installLocalUpdate(selectedUri!!, this)
 
+                }
             }
-        }
     }
 
     private fun isServiceRunning(context: Context, serviceClass: Class<*>): Boolean {
@@ -219,7 +220,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun requestNotificationPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.POST_NOTIFICATIONS),
@@ -250,7 +255,8 @@ fun MainView() {
 
     LaunchedEffect(uiState.state, uiState.installationProgress) {
         if (uiState.state == State.READY_TO_INSTALL
-            || uiState.state == State.DOWNLOADING) {
+            || uiState.state == State.DOWNLOADING
+        ) {
             viewModel.showNotification(context)
         } else {
             viewModel.cancelNotification(context)
@@ -302,7 +308,7 @@ fun MainView() {
 
                     AnimatedVisibility(
                         visible = !isProgressBarShowing,
-                        enter = slideInHorizontally(initialOffsetX = { 70 },),
+                        enter = slideInHorizontally(initialOffsetX = { 70 }),
                         exit = slideOutHorizontally(targetOffsetX = { 140 })
                     ) {
                         IconButton(onClick = { showSettingsDialog = true }) {
@@ -320,23 +326,27 @@ fun MainView() {
 
         if (showSettingsDialog) {
             if (activity != null) {
-                SettingsDialog(onDismiss = {
-                    showSettingsDialog = false
-                }, viewModel = viewModel,
+                SettingsDialog(
+                    onDismiss = {
+                        showSettingsDialog = false
+                    }, viewModel = viewModel,
                     initialIsBetaEnabled = uiState.isBetaEnabled,
-                    context = context)
+                    context = context
+                )
             }
         }
 
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                PaddingValues(
-                    innerPadding.calculateStartPadding(LayoutDirection.Ltr),
-                    innerPadding.calculateTopPadding(),
-                    innerPadding.calculateEndPadding(LayoutDirection.Ltr)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    PaddingValues(
+                        innerPadding.calculateStartPadding(LayoutDirection.Ltr),
+                        innerPadding.calculateTopPadding(),
+                        innerPadding.calculateEndPadding(LayoutDirection.Ltr)
+                    )
                 )
-            )) {
+        ) {
 
             Box(
                 contentAlignment = Alignment.Center,
@@ -349,7 +359,11 @@ fun MainView() {
                 ) {
                     AnimatedVisibility(uiState.statusText.isNotBlank())
                     {
-                        Text(modifier = Modifier.padding(vertical = 8.dp), text = uiState.statusText, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            text = uiState.statusText,
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
 
                     ParanoidAndroidVersion(viewModel)
@@ -387,7 +401,10 @@ fun MainView() {
                                 )
                                 if (uiState.state == State.CAN_SEARCH) {
                                     val title = stringResource(R.string.last_checked)
-                                    Text(text = "$title ${uiState.lastCheckedDate}", style = MaterialTheme.typography.titleSmall)
+                                    Text(
+                                        text = "$title ${uiState.lastCheckedDate}",
+                                        style = MaterialTheme.typography.titleSmall
+                                    )
                                 }
                             }
                         }

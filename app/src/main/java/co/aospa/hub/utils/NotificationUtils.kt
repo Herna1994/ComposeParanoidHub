@@ -18,7 +18,12 @@ object NotificationUtils {
 
     private val notificationManager: NotificationManager? = null
 
-    fun showNotification(context: Context, update: GetDeviceInformationResponse.Update, state: State = State.NONE, installationProgress: Int = 0) {
+    fun showNotification(
+        context: Context,
+        update: GetDeviceInformationResponse.Update,
+        state: State = State.NONE,
+        installationProgress: Int = 0
+    ) {
         val isStable = UpdateUtils.isStable(update.build_type)
 
         val notification = NotificationCompat.Builder(context, "ParanoidHub Updates")
@@ -26,15 +31,31 @@ object NotificationUtils {
             .setContentTitle(
                 if (state == State.DOWNLOADING) {
                     if (isStable) {
-                        context.getString(R.string.downloading_update_notification_title, update.version, update.version_code)
+                        context.getString(
+                            R.string.downloading_update_notification_title,
+                            update.version,
+                            update.version_code
+                        )
                     } else {
-                        context.getString(R.string.downloading_update_notification_title, update.version, update.build_type)
+                        context.getString(
+                            R.string.downloading_update_notification_title,
+                            update.version,
+                            update.build_type
+                        )
                     }
                 } else {
                     if (isStable) {
-                        context.getString(R.string.available_to_download_stable, update.version, update.version_code)
+                        context.getString(
+                            R.string.available_to_download_stable,
+                            update.version,
+                            update.version_code
+                        )
                     } else {
-                        context.getString(R.string.available_to_download, update.version, update.build_type)
+                        context.getString(
+                            R.string.available_to_download,
+                            update.version,
+                            update.build_type
+                        )
                     }
                 }
             )
@@ -43,7 +64,8 @@ object NotificationUtils {
                     ""
                 } else {
                     context.getString(R.string.downloading_update_notification_summary)
-                })
+                }
+            )
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setAutoCancel(false)
@@ -57,7 +79,11 @@ object NotificationUtils {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
-            notification.addAction(0, context.getString(R.string.install_action), installPendingIntent)
+            notification.addAction(
+                0,
+                context.getString(R.string.install_action),
+                installPendingIntent
+            )
         }
 
         if (state == State.DOWNLOADING) {
@@ -68,7 +94,11 @@ object NotificationUtils {
                 cancelIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
-            notification.addAction(0, context.getString(R.string.cancel_action), cancelPendingIntent)
+            notification.addAction(
+                0,
+                context.getString(R.string.cancel_action),
+                cancelPendingIntent
+            )
         }
 
         if (state == State.DOWNLOADING || state == State.INSTALLING) {

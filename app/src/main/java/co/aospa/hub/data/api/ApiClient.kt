@@ -14,7 +14,6 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
 
 object ApiClient {
 

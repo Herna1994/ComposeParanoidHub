@@ -25,9 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import co.aospa.hub.MainActivityViewModel
 import co.aospa.hub.R
 import co.aospa.hub.utils.VibrateUtils
-import co.aospa.hub.MainActivityViewModel
 
 @Composable
 fun SettingsSwitchRow(
@@ -108,7 +108,8 @@ fun SettingsDialog(
                     .padding(horizontal = 8.dp)
                     .clickable {
                         viewModel.switchBeta(isBetaEnabled, context)
-                        onDismiss() },
+                        onDismiss()
+                    },
             )
         },
     )

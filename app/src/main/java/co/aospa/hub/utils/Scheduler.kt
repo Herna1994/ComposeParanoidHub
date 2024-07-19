@@ -11,7 +11,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import co.aospa.hub.MainActivityViewModel
-import java.util.*
+import java.util.Calendar
 
 class Scheduler : Service() {
 
@@ -36,7 +36,12 @@ class Scheduler : Service() {
     private fun getPendingIntent(): PendingIntent {
         val intent = Intent(this, AlarmReceiver::class.java)
         intent.action = "UPDATE"
-        return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        return PendingIntent.getBroadcast(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
     private fun setRepeatingAlarm() {
@@ -62,8 +67,11 @@ class AlarmReceiver : BroadcastReceiver() {
         if (context != null && intent?.action == "UPDATE") {
             Log.d("AlarmReceiver", "Received UPDATE action")
 
-            val viewModel = ViewModelProvider.AndroidViewModelFactory(context.applicationContext as Application).create(
-                MainActivityViewModel::class.java)
+            val viewModel =
+                ViewModelProvider.AndroidViewModelFactory(context.applicationContext as Application)
+                    .create(
+                        MainActivityViewModel::class.java
+                    )
             viewModel.searchForUpdate(context)
         }
     }

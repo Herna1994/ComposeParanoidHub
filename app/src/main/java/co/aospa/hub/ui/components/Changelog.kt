@@ -21,7 +21,6 @@ import co.aospa.hub.R
 import co.aospa.hub.data.api.methods.getdeviceinformation.GetDeviceInformationResponse
 import co.aospa.hub.utils.FileUtils
 import co.aospa.hub.utils.UpdateUtils
-import dev.jeziellago.compose.markdowntext.MarkdownText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -55,7 +54,7 @@ fun Changelog(update: GetDeviceInformationResponse.Update) {
     val platformChangelog = text.value?.let { parseTextToList(it) }
     //val platformChangelogMD = text.value
 
-    val downloadSize : String = FileUtils.humanSize(update.size!!.toLong())
+    val downloadSize: String = FileUtils.humanSize(update.size!!.toLong())
 
     AnimatedVisibility(visible = expanded.value, enter = fadeIn(), exit = fadeOut()) {
         Column(
@@ -109,7 +108,7 @@ fun Changelog(update: GetDeviceInformationResponse.Update) {
                 modifier = Modifier
                     .padding(8.dp)
             )
-    }
+        }
     }
 
     /*Card(

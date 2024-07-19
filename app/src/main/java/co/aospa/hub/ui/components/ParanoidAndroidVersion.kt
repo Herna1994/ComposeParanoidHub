@@ -27,9 +27,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import co.aospa.hub.MainActivityViewModel
 import co.aospa.hub.R
 import co.aospa.hub.data.api.model.DeviceInformation
-import co.aospa.hub.MainActivityViewModel
 import co.aospa.hub.utils.DateUtils
 
 @Composable
@@ -75,7 +75,10 @@ fun ParanoidAndroidVersion(viewModel: MainActivityViewModel) {
                     .graphicsLayer {
                         alpha = 0.5f
                     },
-                colorFilter = ColorFilter.tint(if (isSystemInDarkTheme()) Color.White else Color.Black, BlendMode.DstIn)
+                colorFilter = ColorFilter.tint(
+                    if (isSystemInDarkTheme()) Color.White else Color.Black,
+                    BlendMode.DstIn
+                )
             )
         }
     }
@@ -95,8 +98,16 @@ private fun Header(deviceInformation: DeviceInformation?) {
         Column(
             verticalArrangement = Arrangement.Center,
         ) {
-            deviceInformation?.paranoidAndroidVersion?.let { Text(text = it, style = MaterialTheme.typography.headlineLarge) }
-            Text(text = subtitle, style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.outline))
+            deviceInformation?.paranoidAndroidVersion?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.headlineLarge
+                )
+            }
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.outline)
+            )
         }
     }
 }
@@ -122,7 +133,13 @@ private fun DeviceDetails(deviceInformation: DeviceInformation?) {
                     modifier = Modifier.alpha(0.5f)
                 )
                 Text(
-                    text = "$securityVersion: ${it.securityPatch?.let { it1 -> DateUtils().formatDate(it1) }}",
+                    text = "$securityVersion: ${
+                        it.securityPatch?.let { it1 ->
+                            DateUtils().formatDate(
+                                it1
+                            )
+                        }
+                    }",
                     style = bodyTextStyle,
                     color = textColor,
                     modifier = Modifier.alpha(0.5f)

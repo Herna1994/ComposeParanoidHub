@@ -48,7 +48,7 @@ class MainActivityViewModel : ViewModel() {
     private var isBetaEnabled = false
     private var downloadPackage = ""
     private var packageSHA256 = ""
-    private var packageSize : Long = 0
+    private var packageSize: Long = 0
 
     init {
         loadInformation()
@@ -76,7 +76,11 @@ class MainActivityViewModel : ViewModel() {
 
             searchJob?.cancel()
 
-            _uiState.value = _uiState.value.copy(isBetaEnabled = isBetaEnabled, update = null, state = State.NONE)
+            _uiState.value = _uiState.value.copy(
+                isBetaEnabled = isBetaEnabled,
+                update = null,
+                state = State.NONE
+            )
 
             searchForUpdate(context)
         }
@@ -127,7 +131,8 @@ class MainActivityViewModel : ViewModel() {
                             val isBetaUpdate = update.build_type == Flavor.Beta.toString()
 
                             // Check if the update's Android version is the same or higher
-                            val isCompatibleAndroidVersion = update.android_version >= deviceInformation.androidVersion!!
+                            val isCompatibleAndroidVersion =
+                                update.android_version >= deviceInformation.androidVersion!!
 
                             // Check if the update's datetime is newer than the buildDate
                             val isNewerUpdate = update.datetime > deviceInformation.buildDate!!
@@ -188,11 +193,17 @@ class MainActivityViewModel : ViewModel() {
                         )
                     }
                 } else {
-                    _uiState.value = _uiState.value.copy(state = State.CAN_SEARCH, informationText = "Couldn't find your device updates")
+                    _uiState.value = _uiState.value.copy(
+                        state = State.CAN_SEARCH,
+                        informationText = "Couldn't find your device updates"
+                    )
                 }
             } catch (e: Exception) {
                 Log.e("Error", e.toString())
-                _uiState.value = _uiState.value.copy(state = State.CAN_SEARCH, informationText = "Error occurred")
+                _uiState.value = _uiState.value.copy(
+                    state = State.CAN_SEARCH,
+                    informationText = "Error occurred"
+                )
             }
             _uiState.value = _uiState.value.copy(lastCheckedDate = formattedDate)
         }
@@ -203,7 +214,11 @@ class MainActivityViewModel : ViewModel() {
             try {
                 if (downloadJob == null) {
                     downloadJob = withContext(Dispatchers.IO) {
-                        downloadAndSaveFile(downloadPackage, uiState.value.update?.size!!.toLong(), context)
+                        downloadAndSaveFile(
+                            downloadPackage,
+                            uiState.value.update?.size!!.toLong(),
+                            context
+                        )
                     }
 
                     downloadJob?.invokeOnCompletion {
@@ -241,7 +256,11 @@ class MainActivityViewModel : ViewModel() {
                 }
 
             } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(informationText = "Error occurred", state = State.READY_TO_INSTALL, installationProgress = 0.00F)
+                _uiState.value = _uiState.value.copy(
+                    informationText = "Error occurred",
+                    state = State.READY_TO_INSTALL,
+                    installationProgress = 0.00F
+                )
             }
         }
     }
@@ -267,8 +286,15 @@ class MainActivityViewModel : ViewModel() {
         }
     }
 
-    private suspend fun downloadAndSaveFile(fileUrl: String, updateSize: Long, context: Context): Job {
-        _uiState.value = _uiState.value.copy(statusText = context.getString(R.string.connecting), state = State.NONE)
+    private suspend fun downloadAndSaveFile(
+        fileUrl: String,
+        updateSize: Long,
+        context: Context
+    ): Job {
+        _uiState.value = _uiState.value.copy(
+            statusText = context.getString(R.string.connecting),
+            state = State.NONE
+        )
         return viewModelScope.launch(Dispatchers.IO) {
             try {
                 val fileName = FileUtils.extractFileNameFromUrl(fileUrl)
@@ -344,7 +370,8 @@ class MainActivityViewModel : ViewModel() {
             } catch (e: Exception) {
                 if (downloadJob?.isCancelled == false) {
                     // Handle errors and update the UI state accordingly
-                    _uiState.value = uiState.value.copy(informationText = "Error occurred during download: ${e.message}")
+                    _uiState.value =
+                        uiState.value.copy(informationText = "Error occurred during download: ${e.message}")
                 }
             }
         }
@@ -357,7 +384,7 @@ class MainActivityViewModel : ViewModel() {
         context.startService(serviceIntent)
 
         viewModelScope.launch {
-            UpdateService.getInstance().updateStatusFlow.onEach {  }.collect { status ->
+            UpdateService.getInstance().updateStatusFlow.onEach { }.collect { status ->
                 Log.i("Status", status)
             }
         }
@@ -370,7 +397,10 @@ class MainActivityViewModel : ViewModel() {
                     downloadJob?.cancel()
                     downloadJob = null
                     NotificationUtils.cancelNotification(context)
-                    _uiState.value = _uiState.value.copy(state = State.READY_TO_INSTALL, installationProgress = 0.0F)
+                    _uiState.value = _uiState.value.copy(
+                        state = State.READY_TO_INSTALL,
+                        installationProgress = 0.0F
+                    )
                 }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(informationText = "Error occurred")
@@ -384,7 +414,12 @@ class MainActivityViewModel : ViewModel() {
     }
 
     fun showNotification(context: Context) {
-        NotificationUtils.showNotification(context, uiState.value.update!!, uiState.value.state, (uiState.value.installationProgress * 100).toInt())
+        NotificationUtils.showNotification(
+            context,
+            uiState.value.update!!,
+            uiState.value.state,
+            (uiState.value.installationProgress * 100).toInt()
+        )
     }
 
     fun cancelNotification(context: Context) {
@@ -411,6 +446,6 @@ class MainActivityViewModel : ViewModel() {
         val deviceInformation: DeviceInformation? = null,
         val update: GetDeviceInformationResponse.Update? = null,
         val lastCheckedDate: String? = null,
-        val isBetaEnabled : Boolean = false
+        val isBetaEnabled: Boolean = false
     )
 }

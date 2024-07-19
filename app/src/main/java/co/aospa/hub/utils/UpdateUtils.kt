@@ -1,6 +1,5 @@
 package co.aospa.hub.utils
 
-import android.util.Log
 import co.aospa.hub.data.api.methods.ParanoidHubApi
 import co.aospa.hub.data.api.methods.getdeviceinformation.GetDeviceInformationResponse
 

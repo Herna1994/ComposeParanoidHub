@@ -51,7 +51,7 @@ class DeviceUtils {
         return Build.VERSION.SECURITY_PATCH
     }
 
-    fun isABDevice() : Boolean {
+    fun isABDevice(): Boolean {
         return SystemProperties.getBoolean(GlobalConstants.PROP_AB_DEVICE, false)
     }
 

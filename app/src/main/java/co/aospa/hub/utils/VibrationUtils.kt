@@ -16,7 +16,8 @@ object VibrateUtils {
     }
 
     private fun launchVibrationService(context: Context): Vibrator {
-        val vibrationManager = context.applicationContext.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val vibrationManager =
+            context.applicationContext.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         return vibrationManager.defaultVibrator
     }
 

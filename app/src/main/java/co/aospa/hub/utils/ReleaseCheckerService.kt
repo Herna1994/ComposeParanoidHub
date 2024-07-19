@@ -16,7 +16,6 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.get
-import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.InternalAPI
@@ -61,12 +60,13 @@ class ReleaseCheckerService {
     }
 
     private suspend fun fetchGitHubReleases(): List<Release> {
-        val response: HttpResponse = httpClient.get("https://api.github.com/repos/$githubRepo/releases") {
-            // Only needed if the repository is private
-            /*headers {
-                append("Authorization", "token $githubToken")
-            }*/
-        }
+        val response: HttpResponse =
+            httpClient.get("https://api.github.com/repos/$githubRepo/releases") {
+                // Only needed if the repository is private
+                /*headers {
+                    append("Authorization", "token $githubToken")
+                }*/
+            }
 
         return if (response.status.value in 200..299) {
             response.body()
@@ -106,7 +106,8 @@ class ReleaseCheckerService {
 
     private fun installApk(apkUri: Uri, context: Context) {
         val packageInstaller = context.packageManager.packageInstaller
-        val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
+        val params =
+            PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
 
         params.setAppPackageName(context.packageName)
         val sessionId = packageInstaller.createSession(params)
@@ -135,7 +136,11 @@ class ReleaseCheckerService {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        context.packageManager.packageInstaller.installExistingPackage("co.aospa.hub", PackageManager.INSTALL_REASON_UNKNOWN, null)
+        context.packageManager.packageInstaller.installExistingPackage(
+            "co.aospa.hub",
+            PackageManager.INSTALL_REASON_UNKNOWN,
+            null
+        )
     }
 
     private fun getCurrentAppVersion(context: Context): String? {
